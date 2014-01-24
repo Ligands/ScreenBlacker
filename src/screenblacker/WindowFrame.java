@@ -1,35 +1,33 @@
 package screenblacker;
 
 import java.awt.Color;
+import java.awt.GraphicsEnvironment;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JWindow;
 
-public class WindowFrame extends JFrame{
+public class WindowFrame extends JWindow{
 	private static final long serialVersionUID = 1L;
+	private ScreenBlacker app;
 
-	public WindowFrame() {
-		setTitle("Screen Niggifier");
-	    setSize(600, 600);
+	public WindowFrame(ScreenBlacker sb) {
+		app = sb;
+		setSize(GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getWidth(),
+				GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getHeight());
 	    setLocationRelativeTo(null);
 	    setAlwaysOnTop(true);
-	    setUndecorated(true);
-	    setExtendedState(JFrame.ICONIFIED);
 	    JPanel jPanel = new JPanel();
 	    jPanel.setBackground(Color.black);
 	    MouseListener ml = new MouseAdapter (){
 	        public void mouseClicked (MouseEvent event){
-	            //Put JFrame close code here
-	            dispose();
-	            System.exit(0);
+	            app.toggleBlack();
 	        }
 	    };
 	    jPanel.addMouseListener (ml);
 	    getContentPane().add(jPanel);
-	    setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 
 }
